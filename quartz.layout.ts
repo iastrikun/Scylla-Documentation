@@ -38,9 +38,14 @@ export const defaultContentPageLayout: PageLayout = {
         { Component: Component.ReaderMode() },
       ],
     }),
-    // Component.Explorer(), // <--- REMOVED
+    Component.Explorer(),
+    Component.DesktopOnly(Component.TableOfContents()), // <--- MOVED HERE
   ],
-  right: [], // <--- EMPTIED
+  right: [
+    Component.Graph(),
+    // Component.DesktopOnly(Component.TableOfContents()), // <--- REMOVED FROM HERE
+    Component.Backlinks(),
+  ],
 }
 
 // components for pages that display lists of pages  (e.g. tags or folders)
@@ -58,7 +63,7 @@ export const defaultListPageLayout: PageLayout = {
         { Component: Component.Darkmode() },
       ],
     }),
-    // Component.Explorer(), // <--- REMOVED
+    Component.Explorer(),
   ],
   right: [],
 }

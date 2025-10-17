@@ -1,27 +1,30 @@
 ## Table of Contents
-1. [[#Overview]]
-2. [[#Libraries & Setup]]
-3. [[#Configuration]]
-4. [[#Audio Recording]]
-5. [[#Speech Recognition]]
-6. [[#AI System Prompt]]
-7. [[#Gemini AI Integration]]
-8. [[#Text-to-Speech]]
-9. [[#Audio Playback]]
-10. [[#Action Triggering]]
-11. [[#Main Program Loop]]
+
+1. [Overview](https://claude.ai/chat/973817ad-8959-4731-9942-5e30fb68747b#overview)
+2. [Libraries & Setup](https://claude.ai/chat/973817ad-8959-4731-9942-5e30fb68747b#libraries--setup)
+3. [Configuration](https://claude.ai/chat/973817ad-8959-4731-9942-5e30fb68747b#configuration)
+4. [Audio Recording](https://claude.ai/chat/973817ad-8959-4731-9942-5e30fb68747b#audio-recording)
+5. [Speech Recognition](https://claude.ai/chat/973817ad-8959-4731-9942-5e30fb68747b#speech-recognition)
+6. [AI System Prompt](https://claude.ai/chat/973817ad-8959-4731-9942-5e30fb68747b#ai-system-prompt)
+7. [Gemini AI Integration](https://claude.ai/chat/973817ad-8959-4731-9942-5e30fb68747b#gemini-ai-integration)
+8. [Text-to-Speech](https://claude.ai/chat/973817ad-8959-4731-9942-5e30fb68747b#text-to-speech)
+9. [Audio Playback](https://claude.ai/chat/973817ad-8959-4731-9942-5e30fb68747b#audio-playback)
+10. [Action Triggering](https://claude.ai/chat/973817ad-8959-4731-9942-5e30fb68747b#action-triggering)
+11. [Main Program Loop](https://claude.ai/chat/973817ad-8959-4731-9942-5e30fb68747b#main-program-loop)
 
 ---
+
 ## Overview
-[[#Table of Contents]]
 
 This program powers Scylla, a Filipino-speaking robot crab that:
+
 - Listens to voice commands in Filipino
 - Responds with AI-generated replies
 - Performs physical movements and LED animations
 - Speaks back using natural Filipino voice
 
 **Technology Stack:**
+
 - **Google Cloud Speech-to-Text**: Converts Filipino speech to text
 - **Google Gemini AI**: Generates intelligent responses in Filipino
 - **Google Cloud Text-to-Speech**: Converts text replies to Filipino audio
@@ -29,9 +32,8 @@ This program powers Scylla, a Filipino-speaking robot crab that:
 - **Python**: Coordinates everything
 
 ---
-## Libraries & Setup
 
-[[#Table of Contents]]
+## Libraries & Setup
 
 ```python
 import serial
@@ -51,26 +53,26 @@ import io
 
 ### What each library does:
 
-| Library | Purpose |
-|---------|---------|
-| `serial` | Communicates with Arduino via USB |
-| `re` | Pattern matching to extract JSON from AI responses |
-| `json` | Parses JSON data (AI responses, actions) |
-| `time` | Adds delays and tracks timing |
-| `pygame` | Plays audio files (robot's voice) |
-| `google.cloud.speech` | Converts voice to text |
-| `google.cloud.texttospeech` | Converts text to voice |
-| `google.oauth2.service_account` | Authenticates with Google services |
-| `google.generativeai` | Connects to Gemini AI |
-| `wave` | Saves audio recordings as WAV files |
-| `sounddevice` | Records audio from microphone |
-| `numpy` | Processes audio data (numbers/arrays) |
-| `io` | Handles file operations in memory |
+| Library                         | Purpose                                            | Key Commands/Methods                                  |
+| ------------------------------- | -------------------------------------------------- | ----------------------------------------------------- |
+| `serial`                        | Communicates with Arduino via USB                  | `Serial()`, `.write()`, `.read()`                     |
+| `re`                            | Pattern matching to extract JSON from AI responses | `re.search()`, `re.DOTALL`                            |
+| `json`                          | Parses JSON data (AI responses, actions)           | `json.loads()`, `.get()`                              |
+| `time`                          | Adds delays and tracks timing                      | `time.sleep()`, `time.time()`                         |
+| `pygame`                        | Plays audio files (robot's voice)                  | `mixer.init()`, `.play()`, `.get_busy()`              |
+| `google.cloud.speech`           | Converts voice to text                             | `SpeechClient()`, `.recognize()`                      |
+| `google.cloud.texttospeech`     | Converts text to voice                             | `TextToSpeechClient()`, `.synthesize_speech()`        |
+| `google.oauth2.service_account` | Authenticates with Google services                 | `Credentials.from_service_account_file()`             |
+| `google.generativeai`           | Connects to Gemini AI                              | `configure()`, `GenerativeModel()`, `.send_message()` |
+| `wave`                          | Saves audio recordings as WAV files                | `wave.open()`, `.writeframes()`                       |
+| `sounddevice`                   | Records audio from microphone                      | `sd.InputStream()`, `.read()`                         |
+| `numpy`                         | Processes audio data (numbers/arrays)              | `np.linalg.norm()`, `.concatenate()`                  |
+| `io`                            | Handles file operations in memory                  | `io.open()`                                           |
+
 
 ---
-## Configuration
 
-[[#Table of Contents]]
+## Configuration
 
 ```python
 # Configuration
@@ -85,9 +87,30 @@ tts_client = texttospeech.TextToSpeechClient(credentials=credentials)
 
 1. **GEMINI_API_KEY**: Your secret key to access Google's Gemini AI
 2. **GOOGLE_CLOUD_KEY**: Path to your Google Cloud credentials file (JSON format)
+    - `r""` = raw string (treats backslashes literally, important for Windows paths)
 3. **credentials**: Loads authentication from the JSON file
 4. **speech_client**: Creates connection to Speech-to-Text service
 5. **tts_client**: Creates connection to Text-to-Speech service
+
+### Python Syntax Explained:
+
+**Raw Strings (`r""`)**:
+
+```python
+# Without r: backslash causes problems
+path = "C:\new\file.txt"  # \n means newline!
+
+# With r: treats \ as literal character
+path = r"C:\new\file.txt"  # Correct path
+```
+
+
+**Object Methods (.methodName())**:
+
+```python
+object.method()  # Calls a function belonging to that object
+# Example: speech_client.recognize() calls the recognize function
+```
 
 ### Arduino Connection:
 
@@ -102,13 +125,40 @@ except Exception as e:
 ```
 
 **What this does:**
+
 - Tries to connect to Arduino on port COM11
 - **9600** = communication speed (baud rate)
 - **timeout=1** = wait 1 second max for Arduino response
 - **time.sleep(2)** = gives Arduino 2 seconds to boot up
 - If connection fails, continues without Arduino (for testing)
 
+### Python Concepts Explained:
+
+
+**Serial Port Connection**:
+
+```python
+serial.Serial(port, baudrate, timeout)
+```
+- `port`: **COM port** (COM11, COM3, etc.) - check Device Manager on Windows
+- `baudrate`: Speed of communication (must match Arduino)
+- `timeout`: How long to wait for data before giving up
+
+### Understanding `time.sleep()`
+
+```python
+time.sleep(2)  # Pause for 2 seconds
+```
+
+**Why sleep after connecting?**
+
+- Arduino resets when serial port opens
+- Needs time to boot up
+- Without sleep, first commands might be missed
+
+
 ---
+
 ## Audio Recording
 
 ```python
@@ -118,13 +168,13 @@ def record_audio(filename="input.wav", samplerate=16000, silence_threshold=0.000
 
 ### Parameters:
 
-| Parameter | Default | Purpose |
-|-----------|---------|---------|
-| `filename` | "input.wav" | Where to save the recording |
-| `samplerate` | 16000 | Audio quality (16,000 samples/second) |
-| `silence_threshold` | 0.0002 | How loud before considering it "voice" |
-| `silence_duration` | 1.2 | Seconds of silence before stopping |
-| `max_duration` | 10 | Maximum recording length (safety) |
+|Parameter|Default|Purpose|
+|---|---|---|
+|`filename`|"input.wav"|Where to save the recording|
+|`samplerate`|16000|Audio quality (16,000 samples/second)|
+|`silence_threshold`|0.0002|How loud before considering it "voice"|
+|`silence_duration`|1.2|Seconds of silence before stopping|
+|`max_duration`|10|Maximum recording length (safety)|
 
 ### How it works:
 
@@ -140,6 +190,7 @@ start_time = time.time()
 ```
 
 **Setup:**
+
 - `buffer`: Stores all audio chunks (pieces of recording)
 - `silent_chunks`: Counts how many quiet chunks in a row
 - `started`: Flag to track if voice was detected
@@ -155,12 +206,86 @@ with sd.InputStream(samplerate=samplerate, channels=1, dtype='float32') as strea
 ```
 
 **Recording loop:**
+
 1. Opens microphone stream
 2. Reads one chunk at a time
 3. Calculates volume (loudness) of that chunk
 
+### Python & Audio Concepts:
+
+**With Statement**:
+
 ```python
-        print("Volume:", round(volume_norm, 4))  # See what your mic hears
+with sd.InputStream(...) as stream:
+    # Code here
+# Stream automatically closes after 'with' block
+```
+
+**Why use `with`?**
+
+- Automatically cleans up resources
+- Closes stream even if error occurs
+- Prevents memory leaks
+
+**Understanding Audio Streams**:
+
+```python
+sd.InputStream(samplerate, channels, dtype)
+```
+- `samplerate`: Samples per second (16000 = 16kHz)
+- `channels`: 1 = mono, 2 = stereo
+- `dtype`: Data type ('float32' = decimal numbers)
+
+
+**Reading Audio Data**:
+
+```python
+audio_chunk, _ = stream.read(chunk_samples)
+# Returns: (audio_data, overflowed)
+# _ means "ignore second value"
+```
+
+**Volume Calculation**:
+
+```python
+volume_norm = np.linalg.norm(audio_chunk) / len(audio_chunk)
+```
+- `np.linalg.norm()` = measures "loudness" mathematically
+- Dividing by length = average loudness per sample
+
+
+### Troubleshooting Audio Recording:
+
+**Problem: Recording too sensitive (picks up everything)**
+
+```python
+# Increase threshold
+silence_threshold = 0.001  # Higher = needs louder sound
+```
+
+**Problem: Not detecting voice**
+
+```python
+# Lower threshold
+silence_threshold = 0.0001  # Lower = more sensitive
+```
+
+**Problem: Recording cuts off mid-sentence**
+
+```python
+# Increase silence duration
+silence_duration = 2.0  # Wait 2 seconds of silence before stopping
+```
+
+**Problem: Records forever**
+
+```python
+# Decrease max duration
+max_duration = 5  # Force stop after 5 seconds
+```
+
+```python
+        print("Volume:", round(volume_norm, 4))
         if volume_norm > silence_threshold:
             buffer.append(audio_chunk.copy())
             silent_chunks = 0
@@ -170,6 +295,7 @@ with sd.InputStream(samplerate=samplerate, channels=1, dtype='float32') as strea
 ```
 
 **Voice detection:**
+
 - Prints volume so you can see if mic is working
 - If louder than threshold: save chunk, reset silence counter, start recording
 - First time voice detected: print "Recording"
@@ -184,6 +310,7 @@ with sd.InputStream(samplerate=samplerate, channels=1, dtype='float32') as strea
 ```
 
 **Silence detection:**
+
 - If started recording and now quiet: still save chunk (might be gap between words)
 - Count silent chunks
 - If too many silent chunks: person stopped talking, break loop
@@ -196,6 +323,7 @@ with sd.InputStream(samplerate=samplerate, channels=1, dtype='float32') as strea
 ```
 
 **Safety:**
+
 - If recording goes over 10 seconds, force stop (prevents infinite recording)
 
 ```python
@@ -215,6 +343,7 @@ return filename
 ```
 
 **Saving:**
+
 1. If no voice detected, return None
 2. Combine all chunks into one audio file
 3. Open WAV file for writing
@@ -223,6 +352,7 @@ return filename
 6. Return filename
 
 ---
+
 ## Speech Recognition
 
 ```python
@@ -231,7 +361,8 @@ def transcribe_audio(filename):
         audio_data = f.read()
 ```
 
-**Load the audio file**
+**Step 1: Load the audio file**
+
 - Opens the WAV file in binary mode ("rb" = read binary)
 - Reads all audio data into memory
 
@@ -244,12 +375,13 @@ def transcribe_audio(filename):
     )
 ```
 
-**Configure recognition**
+**Step 2: Configure recognition**
+
 - `audio`: Wraps audio data for Google API
 - `config`: Settings for recognition
-  - **LINEAR16**: Audio format (16-bit PCM)
-  - **16000**: Sample rate (must match recording)
-  - **"fil-PH"**: Filipino (Philippines) language
+    - **LINEAR16**: Audio format (16-bit PCM)
+    - **16000**: Sample rate (must match recording)
+    - **"fil-PH"**: Filipino (Philippines) language
 
 ```python
     response = speech_client.recognize(config=config, audio=audio)
@@ -262,7 +394,8 @@ def transcribe_audio(filename):
         return ""
 ```
 
-**Get transcription**
+**Step 3: Get transcription**
+
 - Send audio to Google Speech API
 - If speech found: extract text from first result
 - Print what was heard
@@ -277,32 +410,39 @@ system_prompt = """
 You are a robot assistant AI. Only answer in Filipino. Your response must be a valid JSON object...
 ```
 
-This long text teaches the AI how to behave.
+This long text teaches the AI how to behave. Key sections:
 
-### Identity
+### 1. Identity
+
 ```
 You are a robot crab. Your name is Scylla, and you are based from the sea monster in Greek mythology.
 ```
+
 - Gives AI personality and backstory
 
 ### 2. Valid Actions
+
 ```
 **VALID ACTION LIST:**
 1. **`blink`** – Controls two single-color LEDs.
 2. **`servo`** – Controls servo motor movements.
 3. **`composite`** – Performs multiple actions in sequence.
 ```
+
 - Lists what physical actions Scylla can perform
 
 ### 3. Emotional Logic
+
 ```
 **Scylla's Emotional Logic:**
 - Happy/friendly → blink both LEDs twice (`blink_both`) + wave arms.
 - Curious/thinking → alternate LED blinking slowly.
 ```
+
 - Maps emotions to actions (teaches AI when to use each movement)
 
 ### 4. Output Format
+
 ```
 {
   "reply": "Magandang araw din sa'yo! Scylla here, ready to lend a claw!",
@@ -312,7 +452,8 @@ You are a robot crab. Your name is Scylla, and you are based from the sea monste
   }
 }
 ```
-- Requires AI to always respond with a formatted output:
+
+- Requires AI to always respond with JSON
 - **reply**: What Scylla says
 - **action**: What Scylla does
 
@@ -327,9 +468,10 @@ chat = model.start_chat(history=[])
 ```
 
 **Setup:**
+
 1. **configure**: Authenticates with Gemini using API key
 2. **GenerativeModel**: Loads the Gemini 2.5 Flash model
-   - `system_instruction`: Gives AI the Scylla personality
+    - `system_instruction`: Gives AI the Scylla personality
 3. **start_chat**: Begins conversation (empty history)
 
 ```python
@@ -341,6 +483,7 @@ def call_gemini(prompt):
 ```
 
 **Sending message:**
+
 1. Print status
 2. Send user's text to AI
 3. Get response and remove extra whitespace
@@ -354,6 +497,7 @@ def call_gemini(prompt):
 ```
 
 **Default values & JSON extraction:**
+
 - Set error message as default reply
 - Set "no action" as default
 - Search for JSON object in response (everything between `{` and `}`)
@@ -374,6 +518,7 @@ def call_gemini(prompt):
 ```
 
 **Parsing:**
+
 1. If JSON found: extract it
 2. Try to parse as JSON object
 3. Get "reply" and "action" fields (use defaults if missing)
@@ -381,6 +526,7 @@ def call_gemini(prompt):
 5. Return reply text and action object
 
 ---
+
 ## Text-to-Speech
 
 ```python
@@ -388,7 +534,8 @@ def call_google_tts(text, filename="reply.mp3", voice_name="fil-PH-Wavenet-B"):
     synthesis_input = texttospeech.SynthesisInput(text=text)
 ```
 
-**Prepare text**
+**Step 1: Prepare text**
+
 - Wraps the reply text for TTS API
 
 ```python
@@ -396,7 +543,8 @@ def call_google_tts(text, filename="reply.mp3", voice_name="fil-PH-Wavenet-B"):
     audio_config = texttospeech.AudioConfig(audio_encoding=texttospeech.AudioEncoding.MP3)
 ```
 
-**Configure voice**
+**Step 2: Configure voice**
+
 - **language_code**: Filipino (Philippines)
 - **voice_name**: "fil-PH-Wavenet-B" (female Filipino voice)
 - **audio_config**: Save as MP3 format
@@ -410,13 +558,15 @@ def call_google_tts(text, filename="reply.mp3", voice_name="fil-PH-Wavenet-B"):
     return filename
 ```
 
-**Generate & save**
+**Step 3: Generate & save**
+
 1. Send to Google TTS API
 2. Open file for writing binary ("wb")
 3. Write audio data to file
 4. Return filename
 
 ---
+
 ## Audio Playback
 
 ```python
@@ -426,7 +576,8 @@ def play_audio(filename: str):
     pygame.mixer.music.play()
 ```
 
-**Play audio**
+**Step 1: Play audio**
+
 1. Initialize pygame audio mixer
 2. Load the MP3 file
 3. Start playback
@@ -436,7 +587,8 @@ def play_audio(filename: str):
         pygame.time.Clock().tick(10)
 ```
 
-**Wait for completion**
+**Step 2: Wait for completion**
+
 - Loop while audio is playing
 - Check 10 times per second
 - Prevents program from continuing before audio finishes
@@ -446,7 +598,8 @@ def play_audio(filename: str):
     pygame.mixer.quit()
 ```
 
-**Cleanup**
+**Step 3: Cleanup**
+
 - Unload audio file from memory
 - Close audio system (allows next playback)
 
@@ -461,6 +614,7 @@ def trigger_action(action_obj):
 ```
 
 **Extract action info:**
+
 - Get action type (servo, blink, composite, none)
 - Get parameters (speed, move, pattern, etc.)
 
@@ -473,6 +627,7 @@ def trigger_action(action_obj):
 ```
 
 **Composite actions:**
+
 - If multiple actions combined
 - Loop through each sub-action
 - Recursively call trigger_action for each
@@ -492,12 +647,13 @@ def trigger_action(action_obj):
 ```
 
 **Servo movements:**
+
 1. Extract parameters (with defaults if missing)
 2. Build command string: `SERVO:target=arms,move=wave,speed=normal,repeat=1`
 3. Print command for debugging
 4. If Arduino connected: send command
-   - `.encode()`: Convert string to bytes
-   - `\n`: Newline tells Arduino "command complete"
+    - `.encode()`: Convert string to bytes
+    - `\n`: Newline tells Arduino "command complete"
 
 ```python
     if action_type == "blink":
@@ -512,11 +668,13 @@ def trigger_action(action_obj):
 ```
 
 **LED blinking:**
+
 1. Extract parameters
 2. Build command: `BLINK:pattern=blink_both,delay=300,repeat=2`
 3. Send to Arduino
 
 ---
+
 ## Main Program Loop
 
 ```python
@@ -525,6 +683,7 @@ def main():
 ```
 
 **Infinite loop:**
+
 - Runs forever (until Ctrl+C or error)
 
 ```python
@@ -536,7 +695,8 @@ def main():
             continue
 ```
 
-**Listen**
+**Step 1: Listen**
+
 1. Record audio from microphone
 2. If voice detected: transcribe to text
 3. If no voice: print message and restart loop
@@ -547,7 +707,8 @@ def main():
         chat.history.append({"role": "user", "parts": [prompt_with_context]})
 ```
 
-**Add to conversation history**
+**Step 2: Add to conversation history**
+
 - Save user's message to chat history
 - Helps AI remember conversation context
 
@@ -557,7 +718,8 @@ def main():
         chat.history.append({"role": "model", "parts": [llm_reply]})
 ```
 
-**Get AI response**
+**Step 3: Get AI response**
+
 1. Send message to Gemini
 2. Get reply text and action
 3. Save AI's reply to history
@@ -566,7 +728,8 @@ def main():
         trigger_action(action_obj)
 ```
 
-**Perform action**
+**Step 4: Perform action**
+
 - Execute servo movements or LED blinks
 - Sends commands to Arduino
 
@@ -577,14 +740,16 @@ def main():
         print(f"\nReply: {llm_reply}")
 ```
 
-**Respond**
+**Step 5: Respond**
+
 1. Convert AI's reply to speech (MP3)
 2. Play audio through speakers
-3. Print reply text to console for debugging
+3. Print reply text to console
 
-**Repeat loop pabalik sa una**
+**Then loop repeats!**
 
 ---
+
 ## Program Startup
 
 ```python
@@ -598,12 +763,14 @@ if __name__ == "__main__":
 ```
 
 **What this does:**
+
 1. `if __name__ == "__main__"`: Only runs if this is the main program
 2. `try`: Attempt to run main loop
 3. `except KeyboardInterrupt`: If user presses Ctrl+C, exit gracefully
 4. `finally`: Always close pygame (cleanup)
 
 ---
+
 ## Complete Flow Summary
 
 ```
@@ -619,37 +786,84 @@ if __name__ == "__main__":
 ```
 
 ---
+
 ## Common Issues & Solutions
 
 ### Problem: No voice detected
-Adjust `silence_threshold` in `record_audio()`. Print volume values to see what your mic picks up.
+
+**Solution:** Adjust `silence_threshold` in `record_audio()`. Print volume values to see what your mic picks up.
 
 ### Problem: Arduino not responding
+
+**Solution:**
+
 - Check COM port number (might not be COM11)
 - Verify Arduino is connected
 - Check baud rate matches (9600)
 
 ### Problem: Wrong language recognition
-Ensure `language_code="fil-PH"` in `transcribe_audio()`
+
+**Solution:** Ensure `language_code="fil-PH"` in `transcribe_audio()`
 
 ### Problem: AI responds in English
-Check system prompt says "Only answer in Filipino"
+
+**Solution:** Check system prompt says "Only answer in Filipino"
 
 ### Problem: JSON parsing error
-AI didn't return valid JSON. Check AI's raw response for formatting issues.
+
+**Solution:** AI didn't return valid JSON. Check AI's raw response for formatting issues.
 
 ---
-## General Possible Modifications:
+
+## Tips for Modification
 
 ### Change voice gender:
+
 ```python
 voice_name="fil-PH-Wavenet-A"  # Male voice
 voice_name="fil-PH-Wavenet-B"  # Female voice
 ```
 
 ### Change recording sensitivity:
+
 ```python
 silence_threshold=0.0005  # Less sensitive (louder needed)
 silence_threshold=0.0001  # More sensitive (picks up quieter sounds)
 ```
 
+### Add new actions:
+
+1. Add to system prompt's VALID ACTION LIST
+2. Add handling in `trigger_action()`
+3. Implement in Arduino code
+
+### Change AI model:
+
+```python
+model = genai.GenerativeModel('models/gemini-1.5-pro', ...)  # More powerful
+model = genai.GenerativeModel('models/gemini-2.0-flash', ...)  # Faster
+```
+
+---
+
+## Security Notes
+
+⚠️ **IMPORTANT:**
+
+- Never share your API keys publicly
+- The keys in this document should be kept secret
+- Consider using environment variables instead of hardcoding keys
+
+---
+
+## Conclusion
+
+This code creates a complete voice-controlled robot system:
+
+- **Ears**: Microphone + Google Speech Recognition
+- **Brain**: Google Gemini AI
+- **Voice**: Google Text-to-Speech
+- **Body**: Arduino + Servos/LEDs
+- **Coordinator**: Python brings it all together
+
+Each function has a specific job, and they work together to make Scylla come alive! 🦀
