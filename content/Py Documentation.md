@@ -1,4 +1,5 @@
-
+---
+title: Python Documentation
 ---
 
 ## Overview
@@ -772,51 +773,10 @@ if __name__ == "__main__":
 9. REPEAT → Back to step 1
 ```
 
----
-
-## Common Issues & Solutions
-
-### Problem: No voice detected
-
-**Solution:** Adjust `silence_threshold` in `record_audio()`. Print volume values to see what your mic picks up.
-
-### Problem: Arduino not responding
-
-**Solution:**
-
-- Check COM port number (might not be COM11)
-- Verify Arduino is connected
-- Check baud rate matches (9600)
-
-### Problem: Wrong language recognition
-
-**Solution:** Ensure `language_code="fil-PH"` in `transcribe_audio()`
-
-### Problem: AI responds in English
-
-**Solution:** Check system prompt says "Only answer in Filipino"
-
-### Problem: JSON parsing error
-
-**Solution:** AI didn't return valid JSON. Check AI's raw response for formatting issues.
 
 ---
 
 ## Tips for Modification
-
-### Change voice gender:
-
-```python
-voice_name="fil-PH-Wavenet-A"  # Male voice
-voice_name="fil-PH-Wavenet-B"  # Female voice
-```
-
-### Change recording sensitivity:
-
-```python
-silence_threshold=0.0005  # Less sensitive (louder needed)
-silence_threshold=0.0001  # More sensitive (picks up quieter sounds)
-```
 
 ### Add new actions:
 
@@ -832,25 +792,3 @@ model = genai.GenerativeModel('models/gemini-2.0-flash', ...)  # Faster
 ```
 
 ---
-
-## Security Notes
-
-⚠️ **IMPORTANT:**
-
-- Never share your API keys publicly
-- The keys in this document should be kept secret
-- Consider using environment variables instead of hardcoding keys
-
----
-
-## Conclusion
-
-This code creates a complete voice-controlled robot system:
-
-- **Ears**: Microphone + Google Speech Recognition
-- **Brain**: Google Gemini AI
-- **Voice**: Google Text-to-Speech
-- **Body**: Arduino + Servos/LEDs
-- **Coordinator**: Python brings it all together
-
-Each function has a specific job, and they work together to make Scylla come alive! 🦀
