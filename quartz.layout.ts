@@ -22,7 +22,7 @@ export const defaultContentPageLayout: PageLayout = {
       condition: (page) => page.fileData.slug !== "index",
     }),
     Component.ArticleTitle(),
-    Component.ContentMeta(),
+    // Component.ContentMeta(), // <--- REMOVED
     Component.TagList(),
   ],
   left: [
@@ -39,18 +39,17 @@ export const defaultContentPageLayout: PageLayout = {
       ],
     }),
     Component.Explorer(),
-    Component.MobileOnly(Component.TableOfContents()), // <--- MOVED AND CHANGED
+    Component.MobileOnly(Component.TableOfContents()), // <--- KEPT FOR MOBILE
   ],
   right: [
-    Component.Graph(),
-    // Component.DesktopOnly(Component.TableOfContents()), // <--- REMOVED FROM HERE
+    // Component.Graph(), // <--- REMOVED
     Component.Backlinks(),
   ],
 }
 
-// components for pages that display lists of pages  (e.g. tags or folders)
+// components for pages that display lists of pages (e.g. tags or folders)
 export const defaultListPageLayout: PageLayout = {
-  beforeBody: [Component.Breadcrumbs(), Component.ArticleTitle()], // <--- REMOVED ContentMeta
+D beforeBody: [Component.Breadcrumbs(), Component.ArticleTitle()], // <--- ContentMeta REMOVED
   left: [
     Component.PageTitle(),
     Component.MobileOnly(Component.Spacer()),
