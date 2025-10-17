@@ -1,8 +1,13 @@
 ---
 title: hehehe
 ---
+### Python Code
+1. [[Source Code]]
+2. [[Documentation]]
 
-1. [[Python Code]]
-2. [[Python Code Documentation]]
-3. [[Arduino Code]]
-4. [[Arduino Code Documentation]]
+### Arduino Code
+1. [[Source Code]]
+2. [[Documentation]]
+
+### Flow Chart
+![[flowchartpythoncode.jpg]]
