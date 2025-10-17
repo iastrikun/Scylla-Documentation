@@ -38,8 +38,8 @@ export const defaultContentPageLayout: PageLayout = {
         { Component: Component.ReaderMode() },
       ],
     }),
-    Component.Explorer(),
-    Component.MobileOnly(Component.TableOfContents()), // <--- KEPT FOR MOBILE
+    Component.DesktopOnly(Component.Explorer()),     // <--- NOW DESKTOP ONLY
+    Component.MobileOnly(Component.TableOfContents()), // <--- REMAINS MOBILE ONLY
   ],
   right: [
     // Component.Graph(), // <--- REMOVED
@@ -62,7 +62,7 @@ export const defaultListPageLayout: PageLayout = {
         { Component: Component.Darkmode() },
       ],
     }),
-    Component.Explorer(),
+    Component.DesktopOnly(Component.Explorer()), // <--- NOW DESKTOP ONLY
   ],
   right: [],
 }
