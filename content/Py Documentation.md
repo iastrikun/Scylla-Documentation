@@ -1,16 +1,3 @@
-## Table of Contents
-
-1. [Overview](https://claude.ai/chat/973817ad-8959-4731-9942-5e30fb68747b#overview)
-2. [Libraries & Setup](https://claude.ai/chat/973817ad-8959-4731-9942-5e30fb68747b#libraries--setup)
-3. [Configuration](https://claude.ai/chat/973817ad-8959-4731-9942-5e30fb68747b#configuration)
-4. [Audio Recording](https://claude.ai/chat/973817ad-8959-4731-9942-5e30fb68747b#audio-recording)
-5. [Speech Recognition](https://claude.ai/chat/973817ad-8959-4731-9942-5e30fb68747b#speech-recognition)
-6. [AI System Prompt](https://claude.ai/chat/973817ad-8959-4731-9942-5e30fb68747b#ai-system-prompt)
-7. [Gemini AI Integration](https://claude.ai/chat/973817ad-8959-4731-9942-5e30fb68747b#gemini-ai-integration)
-8. [Text-to-Speech](https://claude.ai/chat/973817ad-8959-4731-9942-5e30fb68747b#text-to-speech)
-9. [Audio Playback](https://claude.ai/chat/973817ad-8959-4731-9942-5e30fb68747b#audio-playback)
-10. [Action Triggering](https://claude.ai/chat/973817ad-8959-4731-9942-5e30fb68747b#action-triggering)
-11. [Main Program Loop](https://claude.ai/chat/973817ad-8959-4731-9942-5e30fb68747b#main-program-loop)
 
 ---
 
