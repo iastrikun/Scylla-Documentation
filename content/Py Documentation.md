@@ -1,8 +1,25 @@
 ---
 title: Python Documentation
 ---
+## Table of Contents
 
+1. [[#Overview]]
+2. [[#Libraries & Setup]]
+3. [[#Configuration]]
+4. [[#Audio Recording]]
+5. [[#Speech Recognition]]
+6. [[#AI System Prompt]]
+7. [[#Gemini AI Integration]]
+8. [[#Text-to-Speech]]
+9. [[#Audio Playback]]
+10. [[#Action Triggering]]
+11. [[#Main Program Loop]]
+12. [[#Program Startup]]
+
+---
 ## Overview
+
+[[#Table of Contents]]
 
 This program powers Scylla, a Filipino-speaking robot crab that:
 
@@ -22,6 +39,8 @@ This program powers Scylla, a Filipino-speaking robot crab that:
 ---
 
 ## Libraries & Setup
+
+[[#Table of Contents]]
 
 ```python
 import serial
@@ -61,6 +80,8 @@ import io
 ---
 
 ## Configuration
+
+[[#Table of Contents]]
 
 ```python
 # Configuration
@@ -148,6 +169,8 @@ time.sleep(2)  # Pause for 2 seconds
 ---
 
 ## Audio Recording
+
+[[#Table of Contents]]
 
 ```python
 def record_audio(filename="input.wav", samplerate=16000, silence_threshold=0.0002, 
@@ -343,6 +366,8 @@ return filename
 
 ## Speech Recognition
 
+[[#Table of Contents]]
+
 ```python
 def transcribe_audio(filename):
     with io.open(filename, "rb") as f:
@@ -392,6 +417,8 @@ def transcribe_audio(filename):
 ---
 
 ## AI System Prompt
+
+[[#Table of Contents]]
 
 ```python
 system_prompt = """
@@ -448,6 +475,8 @@ You are a robot crab. Your name is Scylla, and you are based from the sea monste
 ---
 
 ## Gemini AI Integration
+
+[[#Table of Contents]]
 
 ```python
 genai.configure(api_key=GEMINI_API_KEY)
@@ -517,6 +546,8 @@ def call_gemini(prompt):
 
 ## Text-to-Speech
 
+[[#Table of Contents]]
+
 ```python
 def call_google_tts(text, filename="reply.mp3", voice_name="fil-PH-Wavenet-B"):
     synthesis_input = texttospeech.SynthesisInput(text=text)
@@ -557,6 +588,8 @@ def call_google_tts(text, filename="reply.mp3", voice_name="fil-PH-Wavenet-B"):
 
 ## Audio Playback
 
+[[#Table of Contents]]
+
 ```python
 def play_audio(filename: str):
     pygame.mixer.init()
@@ -594,6 +627,8 @@ def play_audio(filename: str):
 ---
 
 ## Action Triggering
+
+[[#Table of Contents]]
 
 ```python
 def trigger_action(action_obj):
@@ -664,6 +699,8 @@ def trigger_action(action_obj):
 ---
 
 ## Main Program Loop
+
+[[#Table of Contents]]
 
 ```python
 def main():
@@ -739,6 +776,8 @@ def main():
 ---
 
 ## Program Startup
+
+[[#Table of Contents]]
 
 ```python
 if __name__ == "__main__":

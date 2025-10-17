@@ -39,11 +39,10 @@ export const defaultContentPageLayout: PageLayout = {
       ],
     }),
     // Component.Explorer(), // <--- REMOVED
-    Component.TableOfContents(), // <--- ADDED HERE
+    Component.DesktopOnly(Component.TableOfContents()), // <--- WRAPPED FOR DESKTOP ONLY
   ],
   right: [
     // Component.Graph(), // <--- REMOVED
-    // Component.DesktopOnly(Component.TableOfContents()), // <--- REMOVED
     Component.Backlinks(),
   ],
 }

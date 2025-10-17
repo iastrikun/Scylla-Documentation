@@ -1,5 +1,24 @@
+## Table of Contents
 
+1. [[#Overview]]
+2. [[#Common Variables]]
+3. [[#Servo Angle Ranges]]
+4. [[#Setup Function]]
+5. [[#Main Loop]]
+6. [[#Breathing Animation]]
+7. [[#Command Processing]]
+8. [[#Basic Movements]]
+9. [[#Complex Dance Movements]]
+10. [[#Helper Functions]]
+11. [[#LED Control]]
+12. [[#String Parsing]]
+13. [[#Complete Command Flow]]
+
+---
 ## Overview
+
+[[#Table of Contents]]
+
 1. Python sends command like: `SERVO:move=wave,speed=normal,repeat=1`
 2. Arduino parses the command
 3. Arduino moves servos and controls LEDs
@@ -7,6 +26,8 @@
 5. Waits for next command
 
 ## Common Variables
+
+[[#Table of Contents]]
 
 ```cpp
 // Speed settings (controls sweep movement)
@@ -38,6 +59,8 @@ bool breathingEnabled = true;
 
 ---
 ## Servo Angle Ranges
+
+[[#Table of Contents]]
 
 ### Servo Angles
 
@@ -105,6 +128,8 @@ const int RIGHT_CLAW_OPEN = 180;
 ---
 ## Main Loop
 
+[[#Table of Contents]]
+
 ```cpp
 void loop() {
   // Handle breathing animation when idle
@@ -139,6 +164,8 @@ void loop() {
 
 ---
 ## Breathing Animation
+
+[[#Table of Contents]]
 
 ```cpp
 void updateBreathing() {
@@ -193,6 +220,8 @@ void updateBreathing() {
 
 ### Enable/Disable Functions
 
+[[#Table of Contents]]
+
 ```cpp
 void disableBreathing() {
   breathingEnabled = false;
@@ -213,6 +242,8 @@ void enableBreathing() {
 
 ---
 ## Command Processing
+
+[[#Table of Contents]]
 
 ### Main Command Handler
 
@@ -241,6 +272,8 @@ After substring(6): "move=wave,speed=fast"
 ```
 
 ### Servo Command Handler
+
+[[#Table of Contents]]
 
 ```cpp
 void handleServoCommand(String params) {
@@ -299,6 +332,8 @@ void handleServoCommand(String params) {
 
 ### Movement Executions
 
+[[#Table of Contents]]
+
 ```cpp
 void executeMove(String move) {
   if (move == "wave") {
@@ -320,6 +355,8 @@ void executeMove(String move) {
 
 ---
 ## Basic Movements
+
+[[#Table of Contents]]
 
 ### Wave Movement
 
@@ -571,6 +608,8 @@ void doStartled() {
 
 ---
 ## Complex Dance Movements
+
+[[#Table of Contents]]
 
 ### Crab Dance
 
@@ -1004,6 +1043,8 @@ void doPartyMode() {
 
 ## Helper Functions
 
+[[#Table of Contents]]
+
 ### Reset to Rest
 
 ```cpp
@@ -1175,6 +1216,8 @@ pwmBlinkLED(leftLED, 200, 200);    // Medium flash, 200ms
 
 ## LED Control
 
+[[#Table of Contents]]
+
 ### Blink Command Handler
 
 ```cpp
@@ -1283,6 +1326,8 @@ Right:   ░░    ██     ░░     ██
 
 ## String Parsing
 
+[[#Table of Contents]]
+
 ### Extract Parameter
 
 ```cpp
@@ -1334,6 +1379,8 @@ Key: "speed"
 ---
 
 ## Complete Command Flow
+
+[[#Table of Contents]]
 
 ### Example: Wave Movement
 
