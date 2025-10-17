@@ -2,12 +2,12 @@
 title: hehehe
 ---
 ### Python Code
-1. [[Source Code]]
-2. [[Documentation]]
+1. [[Py Source Code]]
+2. [[Py Documentation]]
 
 ### Arduino Code
-1. [[Source Code]]
-2. [[Documentation]]
+1. [[Arduino Source Code]]
+2. [[Arduino Documentation]]
 
 ### Flow Chart
 ![[flowchartpythoncode.jpg]]
