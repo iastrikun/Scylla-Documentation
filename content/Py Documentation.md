@@ -85,8 +85,8 @@ import io
 
 ```python
 # Configuration
-GEMINI_API_KEY = "AIzaSyDZUoCSm1DFrl4dPNUed4Q9UI8r6S8OK-g"
-GOOGLE_CLOUD_KEY = r"C:\extreme-lore-473311-h1-f1081b7fa77e.json"
+GEMINI_API_KEY =
+GOOGLE_CLOUD_KEY =
 credentials = service_account.Credentials.from_service_account_file(GOOGLE_CLOUD_KEY)
 speech_client = speech.SpeechClient(credentials=credentials)
 tts_client = texttospeech.TextToSpeechClient(credentials=credentials)
